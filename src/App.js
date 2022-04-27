@@ -1,24 +1,30 @@
-import logo from './logo.svg';
-import './App.css';
+import { useReducer } from "react";
+import { useAlertReducer } from "./AlertExample/AlertManager";
+import { styled } from '@mui/material/'
+import AlertExample from "./AlertExample";
+import { AlertManager } from "./AlertExample/AlertManager";
 
-function App() {
+const AlertManagerContainer = styled('div')({
+  display: 'flex',
+  justifyContent: 'flex-end',
+  marginRight: '30px'
+})
+
+const AppContainer = styled('div')({
+  display: 'flex',
+  flexDirection: 'column'
+})
+
+const App = () => {
+  const [state, dispatch] = useReducer(useAlertReducer, [])
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <AppContainer className="App">
+      <AlertExample dispatch={dispatch}/>
+      <AlertManagerContainer>
+        <AlertManager state={state} dispatch={dispatch} />
+      </AlertManagerContainer>
+    </AppContainer>
   );
 }
 
