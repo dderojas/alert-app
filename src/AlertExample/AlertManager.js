@@ -27,11 +27,11 @@ export const useAlertReducer = (state, action) => {
   }
 }
 
-export const AlertManager = ({ state, dispatch }) => {
+export const AlertManager = ({ state }) => {
   return (
     <div>
       {state.map((elem) => {
-        return <AlertComponent elem={elem} dispatch={dispatch}/>
+        return <AlertComponent elem={elem} />
       })}
     </div>
   )
