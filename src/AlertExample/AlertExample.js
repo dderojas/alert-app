@@ -2,6 +2,7 @@
 import { useContext } from "react";
 import { AlertContext } from "../App";
 import { ACTIONS } from "./AlertManager"
+import { Formik } from "formik";
 import { AlertExampleContainer } from "./alertContainers";
 import { TextField, Button } from '@mui/material/'
 import { v4 as uuid } from "uuid";
@@ -11,20 +12,15 @@ import { v4 as uuid } from "uuid";
 export const AlertExample = () => {
   const { alertDispatch } = useContext(AlertContext)
 
-  const handleClick = (e) => {
-    e.preventDefault();
+  const handleClick = (values, actions) => {
+    const { text, timeLimit, link, alertType, alertTitle} = values
     const id = uuid()
-    const text = e.target[0].value
-    const time = e.target[1].value
-    const link = e.target[2].value
-    const alertType = e.target[3].value
-    const alertTitle = e.target[4].value
     alertDispatch({ 
       type: ACTIONS.SUCCESS, 
       payload: {
         timeLimit: setTimeout(() => {
           alertDispatch({ type: ACTIONS.DELETE, payload: { id } })}
-          , time * 1000 || 10000),
+          , timeLimit * 1000 || 10000),
         text,
         link,
         alertType,
@@ -32,22 +28,35 @@ export const AlertExample = () => {
         alertTitle 
       } 
     })
-    e.target.reset()
+    actions.resetForm()
   }
 
   return (
     <div>
       <h1>Alerts UI</h1>
-      <AlertExampleContainer onSubmit={handleClick}>
-        <TextField variant="filled" label="Text"/>
-        <TextField variant="filled" label="Time Limit"/>
-        <TextField variant="filled" label="Link" placeholder="use https://www"/>
-        <TextField variant="filled" label="Alert Type" placeholder="error, warning, info, success"/>
-        <TextField variant="filled" label="Alert Title"/>
-        <Button type="submit" variant="contained" sx={{ mt: 4 }}>
-          Submit Alert
-        </Button>
-      </AlertExampleContainer>
+        <Formik 
+          initialValues={{ 
+            text: '',
+            timeLimit: '',
+            link: '',
+            alertType: '',
+            alertTitle: ''
+          }} 
+          onSubmit={handleClick}
+        >
+          {props => (
+            <AlertExampleContainer onSubmit={props.handleSubmit}>
+              <TextField variant="filled" label="Text" value={props.values.text} onChange={props.handleChange} name="text"/>
+              <TextField variant="filled" label="Time Limit" value={props.values.timeLimit} onChange={props.handleChange} name="timeLimit"/>
+              <TextField variant="filled" label="Link" placeholder="use https://www" value={props.values.link} onChange={props.handleChange} name="link"/>
+              <TextField variant="filled" label="Alert Type" placeholder="error, warning, info, success" value={props.values.alertType} onChange={props.handleChange} name="alertType"/>
+              <TextField variant="filled" label="Alert Title" value={props.values.alertTitle} onChange={props.handleChange} name="alertTitle"/>
+              <Button type="submit" variant="contained" sx={{ mt: 4 }}>
+                Submit Alert
+              </Button>
+            </AlertExampleContainer>
+          )}
+        </Formik>
     </div>
   )
 }
