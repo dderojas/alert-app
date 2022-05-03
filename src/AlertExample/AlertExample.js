@@ -12,8 +12,26 @@ import { v4 as uuid } from "uuid";
 export const AlertExample = () => {
   const { alertDispatch } = useContext(AlertContext)
 
+  const handleURL = (value) => {
+    const urlPattern = new RegExp(/^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/);
+    let string = value;
+
+    if(urlPattern.test(string)){
+      //string is url
+
+      ///clear http && https from string
+      string = string.replace("https://","").replace("http://","");
+
+      //add https to string
+      string = `https://${string}`;
+    }
+    return string
+  }
+
   const handleClick = (values, actions) => {
     const { text, timeLimit, link, alertType, alertTitle} = values
+    const url = handleURL(link)
+    console.log(url, 'asdfasdf!@#')
     const id = uuid()
     alertDispatch({ 
       type: ACTIONS.SUCCESS, 
@@ -22,7 +40,7 @@ export const AlertExample = () => {
           alertDispatch({ type: ACTIONS.DELETE, payload: { id } })}
           , timeLimit * 1000 || 10000),
         text,
-        link,
+        link: url,
         alertType,
         id,
         alertTitle 
