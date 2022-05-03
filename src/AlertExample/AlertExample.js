@@ -31,7 +31,6 @@ export const AlertExample = () => {
   const handleClick = (values, actions) => {
     const { text, timeLimit, link, alertType, alertTitle} = values
     const url = handleURL(link)
-    console.log(url, 'asdfasdf!@#')
     const id = uuid()
     alertDispatch({ 
       type: ACTIONS.SUCCESS, 
