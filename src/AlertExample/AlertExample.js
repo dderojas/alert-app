@@ -65,7 +65,7 @@ export const AlertExample = () => {
             <AlertExampleContainer onSubmit={props.handleSubmit}>
               <TextField variant="filled" label="Text" value={props.values.text} onChange={props.handleChange} name="text"/>
               <TextField variant="filled" label="Time Limit" value={props.values.timeLimit} onChange={props.handleChange} name="timeLimit"/>
-              <TextField variant="filled" label="Link" placeholder="use https://www" value={props.values.link} onChange={props.handleChange} name="link"/>
+              <TextField variant="filled" label="Link" placeholder="https://" value={props.values.link} onChange={props.handleChange} name="link"/>
               <TextField variant="filled" label="Alert Type" placeholder="error, warning, info, success" value={props.values.alertType} onChange={props.handleChange} name="alertType"/>
               <TextField variant="filled" label="Alert Title" value={props.values.alertTitle} onChange={props.handleChange} name="alertTitle"/>
               <Button type="submit" variant="contained" sx={{ mt: 4 }}>
