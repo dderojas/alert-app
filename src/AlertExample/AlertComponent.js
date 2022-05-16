@@ -4,13 +4,12 @@ import { Alert, AlertTitle, Stack, Link } from '@mui/material/'
 import { ACTIONS } from "./AlertManager"
 
 export const AlertComponent = ({ elem }) => {
-  const { alertDispatch }  = useContext(AlertContext)
+  const { dispatch }  = useContext(AlertContext)
 
   const { alertType, id, alertTitle, link } = elem
-
   return (
     <Stack>
-      <Alert severity={alertType} key={id} id={id} onClose={() => alertDispatch({ type: ACTIONS.DELETE, payload: { id } })}> 
+      <Alert severity={alertType} key={id} id={id} onClose={() => dispatch({ type: ACTIONS.DELETE, payload: { id } })}> 
           {alertTitle && (<AlertTitle>{alertTitle}</AlertTitle>)}
           <strong>{elem.text}</strong>
           <br/>

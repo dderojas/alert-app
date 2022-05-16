@@ -10,7 +10,7 @@ import { v4 as uuid } from "uuid";
 
 
 export const AlertExample = () => {
-  const { alertDispatch } = useContext(AlertContext)
+  const { dispatch } = useContext(AlertContext)
 
   const handleURL = (value) => {
     const urlPattern = new RegExp(/^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/);
@@ -32,17 +32,17 @@ export const AlertExample = () => {
     const { text, timeLimit, link, alertType, alertTitle} = values
     const url = handleURL(link)
     const id = uuid()
-    alertDispatch({ 
-      type: ACTIONS.SUCCESS, 
+    dispatch({ 
+      type: alertType, 
       payload: {
         timeLimit: setTimeout(() => {
-          alertDispatch({ type: ACTIONS.DELETE, payload: { id } })}
+          dispatch({ type: ACTIONS.DELETE, payload: { id } })}
           , timeLimit * 1000 || 10000),
         text,
         link: url,
-        alertType,
         id,
-        alertTitle 
+        alertTitle,
+        alertType
       } 
     })
     actions.resetForm()

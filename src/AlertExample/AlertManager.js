@@ -1,11 +1,9 @@
+import { useContext } from 'react';
 import { AlertComponent } from './AlertComponent'
+import { AlertContext } from '../App'
 
 
 export const ACTIONS = {
-  ERROR: 'error',
-  WARNING: 'warning',
-  INFO: 'info',
-  SUCCESS: 'success',
   DELETE: 'delete'
 } 
 
@@ -14,20 +12,13 @@ export const useAlertReducer = (state, action) => {
     case ACTIONS.DELETE:
       state = state.filter((elem) => elem.id !== action.payload.id)
       return state
-    case ACTIONS.ERROR: 
-     return ''
-    case ACTIONS.WARNING:
-      return ''
-    case ACTIONS.INFO:
-      return ''
-    case ACTIONS.SUCCESS:
-     return [ ...state, action.payload]
      default:
-        return state
+        return [ ...state, action.payload]
   }
 }
 
-export const AlertManager = ({ state }) => {
+export const AlertManager = () => {
+  const { state } = useContext(AlertContext)
   return (
     <div>
       {state.map((elem) => {

@@ -10,10 +10,10 @@ const App = () => {
   const [state, dispatch] = useReducer(useAlertReducer, [])
 
   return (
-    <AlertContext.Provider value={{ alertState: state, alertDispatch: dispatch }}>
+    <AlertContext.Provider value={{ state, dispatch }}>
       <AppContainer className="App">
         <AlertExample />
-        <AlertManager state={state} />
+        <AlertManager />
       </AppContainer>
     </AlertContext.Provider>
   );
